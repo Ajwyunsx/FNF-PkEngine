@@ -36,7 +36,7 @@ class FPS extends TextField
 	@:noCompletion private var cacheCount:Int;
 	@:noCompletion private var currentTime:Float;
 	@:noCompletion private var times:Array<Float>;
-
+    @:noCompletion private var pkEngineVersion:String;
 	public function new(x:Float = 10, y:Float = 10, color:Int = 0x000000)
 	{
 		super();
@@ -56,6 +56,7 @@ class FPS extends TextField
 		currentTime = 0;
 		times = [];
 
+        pkEngineVersion = "v0.5.0";
 		#if flash
 		addEventListener(Event.ENTER_FRAME, function(e)
 		{
@@ -90,7 +91,7 @@ class FPS extends TextField
 			memoryMegas = Math.abs(FlxMath.roundDecimal(System.totalMemory / 1000000, 1));
 			text += "\nMemory: " + memoryMegas + " MB";
 			#end
-			
+			text += "\nPk Engine: " + pkEngineVersion;
 			textColor = 0xFFFFFFFF;
 			if (memoryMegas > 3000 || currentFPS <= ClientPrefs.framerate / 2)
 			{
