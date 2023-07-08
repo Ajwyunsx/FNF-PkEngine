@@ -100,15 +100,6 @@ class VisualsUISubState extends BaseOptionsMenu
 			"If checked, enables radnom color's for FPS.\nRequest: You need to turn on FPS counter first!\nWarning: Rainbow FPS maybe can be a little bit buggy!",
 			'rainbowFPS', 'bool', false);
 		addOption(option);
-		var option:Option = new Option('PK Engine version text',
-			"If unchecked, hides current SB Engine version.\nRequest: You need to turn on FPS counter first!", 'pkEngineVersion', 'bool', false);
-		addOption(option);
-		var option:Option = new Option('Total Memory counter',
-			"If unchecked, hides total memory's.\nRequest: You need to turn on FPS counter and Memory counter first!", 'totalMemory', 'bool', false);
-		addOption(option);
-		var option:Option = new Option('Memory counter', "If unchecked, hides memory's.\nRequest: You need to turn on FPS counter first!", 'memory', 'bool',
-			false);
-		addOption(option);
 		var option:Option = new Option('Pause Screen Song:',
 			"What song do you prefer for the Pause Screen?",
 			'pauseMusic',
