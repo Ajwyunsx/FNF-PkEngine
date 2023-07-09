@@ -633,14 +633,14 @@ class TitleState extends MusicBeatState
 					FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
 					FlxG.sound.music.fadeIn(4, 0, 0.7);
 				case 2:
-					#if PK_WATERMARKS
+					#if PSYCH_WATERMARKS
 					createCoolText(['PK Engine by'], 15);
 					#else
 					createCoolText(['ninjamuffin99', 'phantomArcade', 'kawaisprite', 'evilsk8er']);
 					#end
 				// credTextShit.visible = true;
 				case 4:
-					#if PK_WATERMARKS
+					#if PSYCH_WATERMARKS
 					addMoreText('Ajwwkak', 15);
 					#else
 					addMoreText('present');
