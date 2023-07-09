@@ -36,7 +36,7 @@ class FPS extends TextField
 	@:noCompletion private var cacheCount:Int;
 	@:noCompletion private var currentTime:Float;
 	@:noCompletion private var times:Array<Float>;
-
+    @:noCompletion private var pkEngineVersion:String;
 	public function new(x:Float = 10, y:Float = 10, color:Int = 0x000000)
 	{
 		super();
@@ -47,64 +47,29 @@ class FPS extends TextField
 		currentFPS = 0;
 		selectable = false;
 		mouseEnabled = false;
-		defaultTextFormat = new TextFormat(Paths.font("vcr.ttf"), 12, color);
+		defaultTextFormat = new TextFormat("_sans", 14, color);
 		autoSize = LEFT;
 		multiline = true;
 		text = "FPS: ";
-		textColor = 0xFFFFFFFF;
- 
+
 		cacheCount = 0;
 		currentTime = 0;
 		times = [];
 
+        pkEngineVersion = "v0.5.0";
 		#if flash
 		addEventListener(Event.ENTER_FRAME, function(e)
 		{
 			var time = Lib.getTimer();
 			__enterFrame(time - currentTime);
-		
 		});
 		#end
 	}
-	
-	public static var currentColor = 0;	
-	var skippedFrames = 0;
-
-	var ColorArray:Array<Int> = [
-		0x9400D3,
-		0x4B0082,
-		0x0000FF,
-		0x00FF00,
-		0xFFFF00,
-		0xFF7F00,
-		0xFF0000
-		];
 
 	// Event Handlers
 	@:noCompletion
 	private #if !flash override #end function __enterFrame(deltaTime:Float):Void
 	{
-	
-		if (ClientPrefs.rainbowFPS)
-		{
-			if (skippedFrames >= 6)
-			{
-				if (currentColor >= ColorArray.length)
-					currentColor = 0;
-				textColor = ColorArray[currentColor];
-				currentColor++;
-				skippedFrames = 0;
-			}
-			else
-			{
-				skippedFrames++;
-			}
-		}
-		else
-		{
-			textColor = 0xFFFFFFFF;
-		}
-		
 		currentTime += deltaTime;
 		times.push(currentTime);
 
@@ -125,18 +90,12 @@ class FPS extends TextField
 			#if openfl
 			memoryMegas = Math.abs(FlxMath.roundDecimal(System.totalMemory / 1000000, 1));
 			text += "\nMemory: " + memoryMegas + " MB";
-			text += "\npk Engine v" + MainMenuState.pkEngineVersion;
 			#end
-			
-			var newmemoryMegas:Float = 0;
-			// textColor = 0xFFFFFFFF;
-			if (memoryMegas > 1000) // || currentFPS <= ClientPrefs.framerate / 2)
+			text += "\nPk Engine: " + pkEngineVersion;
+			textColor = 0xFFFFFFFF;
+			if (memoryMegas > 3000 || currentFPS <= ClientPrefs.framerate / 2)
 			{
-			newmemoryMegas = Math.ceil( Math.abs( System.totalMemory ) / 10000000 / 1.024)/100;
-				// textColor = 0xFFFFFFFF;
-				text = "FPS: " + currentFPS;
-				text += "\nMemory: " + newmemoryMegas + " GB";
-				text += "\npk Engine v" + MainMenuState.pkEngineVersion;
+				textColor = 0xFFFF0000;
 			}
 
 			#if (gl_stats && !disable_cffi && (!html5 || !canvas))
@@ -150,8 +109,4 @@ class FPS extends TextField
 
 		cacheCount = currentCount;
 	}
-	
-	
-
-	
 }
