@@ -96,9 +96,11 @@ class VisualsUISubState extends BaseOptionsMenu
 			true);
 		addOption(option);
 		option.onChange = onChangeFPSCounter;
-               var option:Option = new Option('Rainbow FPS',
-			"If checked, enables radnom color's for FPS.\nRequest: You need to turn on FPS counter first!\nWarning: Rainbow FPS maybe can be a little bit buggy!",
-			'rainbowFPS', 'bool', false);
+               var option:Option = new Option('Rainbow FPS', 
+			'Rainbow FPS text', 
+			'rainbowFPS', 
+			'bool', 
+			false); 
 		addOption(option);
 		var option:Option = new Option('Pause Screen Song:',
 			"What song do you prefer for the Pause Screen?",
