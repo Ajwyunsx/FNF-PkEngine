@@ -4,6 +4,7 @@ import haxe.Timer;
 import openfl.events.Event;
 import openfl.text.TextField;
 import openfl.text.TextFormat;
+import flixel.util.FlxColor;
 import flixel.math.FlxMath;
 #if gl_stats
 import openfl.display._internal.stats.Context3DStats;
@@ -65,11 +66,43 @@ class FPS extends TextField
 		});
 		#end
 	}
+	
+    public static var currentColor = 0;	
+	var skippedFrames = 0;
 
+	var ColorArray:Array<Int> = [
+		0x9400D3,
+		0x4B0082,
+		0x0000FF,
+		0x00FF00,
+		0xFFFF00,
+		0xFF7F00,
+		0xFF0000
+		];
+		
 	// Event Handlers
 	@:noCompletion
 	private #if !flash override #end function __enterFrame(deltaTime:Float):Void
 	{
+	if (ClientPrefs.rainbowFPS)
+		{
+			if (skippedFrames >= 6)
+			{
+				if (currentColor >= ColorArray.length)
+					currentColor = 0;
+				textColor = ColorArray[currentColor];
+				currentColor++;
+				skippedFrames = 0;
+			}
+			else
+			{
+				skippedFrames++;
+			}
+		}
+		else
+		{
+			textColor = 0xFFFFFFFF;
+		}
 		currentTime += deltaTime;
 		times.push(currentTime);
 
