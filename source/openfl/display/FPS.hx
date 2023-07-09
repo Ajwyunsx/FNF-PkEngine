@@ -84,6 +84,7 @@ class FPS extends TextField
 	@:noCompletion
 	private #if !flash override #end function __enterFrame(deltaTime:Float):Void
 	{
+	
 	if (ClientPrefs.rainbowFPS)
 		{
 			if (skippedFrames >= 6)
@@ -103,6 +104,7 @@ class FPS extends TextField
 		{
 			textColor = 0xFFFFFFFF;
 		}
+		
 		currentTime += deltaTime;
 		times.push(currentTime);
 
