@@ -4870,7 +4870,21 @@ class PlayState extends MusicBeatState
 				trainReset();
 		}
 	}
+  class ObjectPool {
+  public var pool:Array<GameObject> = new Array();
 
+  public function getObject():GameObject {
+    if(pool.length > 0) {
+      return pool.pop();
+    } else {
+      return new GameObject(); 
+    }
+  }
+
+  public function freeObject(obj:GameObject) {
+    pool.push(obj);
+  }
+   }
 	function trainReset():Void
 	{
 		if(gf != null)
