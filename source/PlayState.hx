@@ -5360,48 +5360,65 @@ class PlayState extends MusicBeatState
 }
 // PlayState类中其他代码(行1-5360)
 
-// 在开头声明对象池
-var notePool:ObjectPool<Note>; 
-var strumNotePool:ObjectPool<StrumNote>;
+// 对象池声明为私有
+private var notePool:ObjectPool<Note>;
+private var strumNotePool:ObjectPool<StrumNote>;
 
-// 在create()函数中初始化对象池
+// 添加getter和setter
+public function getNotePool():ObjectPool<Note> {
+  return notePool;
+}
+
+public function setNotePool(pool:ObjectPool<Note>) {
+  notePool = pool; 
+}
+
+public function getStrumNotePool():ObjectPool<StrumNote> {
+  return strumNotePool;
+}
+
+public function setStrumNotePool(pool:ObjectPool<StrumNote>) {
+  strumNotePool = pool;
+}
+
+// 在create()中初始化池
 public function create() {
-  // 其他初始化代码
+  // 初始化代码
 
   notePool = new ObjectPool<Note>(() -> new Note());
   notePool.setMaxSize(100);
-
+  
   strumNotePool = new ObjectPool<StrumNote>(() -> new StrumNote());
   strumNotePool.setMaxSize(50);
 
-  // 其他代码  
+  // 其他代码
 }
 
-// 在生成Note时使用对象池
+// 生成Note时使用getter
 function generateNote() {
-  var note = notePool.obtain();
-  // 初始化note
+  var note = getNotePool().obtain();
 
+  // 初始化  
   notes.add(note);
 }
 
-// 在Note结束时归还对象池  
+// 回收时使用setter  
 function onNoteEnd(note) {
-  notePool.free(note);
+  getNotePool().free(note);
   notes.remove(note);
 }
 
 // StrumNote同理
-function generateStrumNote() {
-  var strumNote = strumNotePool.obtain();
+function generateStrum() {
+  var strum = getStrumNotePool().obtain();
+  
   // 初始化
-
-  strumNotes.add(strumNote);
+  strumNotes.add(strum); 
 }
 
-function onStrumNoteEnd(strumNote) {
-  strumNotePool.free(strumNote);
-  strumNotes.remove(strumNote);
+function onStrumEnd(strum) {
+  getStrumNotePool().free(strum);
+  strumNotes.remove(strum);
 }
 
 // 其他代码
