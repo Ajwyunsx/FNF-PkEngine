@@ -5358,3 +5358,50 @@ class PlayState extends MusicBeatState
 	var curLight:Int = -1;
 	var curLightEvent:Int = -1;
 }
+// PlayState类中其他代码(行1-5360)
+
+// 在开头声明对象池
+var notePool:ObjectPool<Note>; 
+var strumNotePool:ObjectPool<StrumNote>;
+
+// 在create()函数中初始化对象池
+public function create() {
+  // 其他初始化代码
+
+  notePool = new ObjectPool<Note>(() -> new Note());
+  notePool.setMaxSize(100);
+
+  strumNotePool = new ObjectPool<StrumNote>(() -> new StrumNote());
+  strumNotePool.setMaxSize(50);
+
+  // 其他代码  
+}
+
+// 在生成Note时使用对象池
+function generateNote() {
+  var note = notePool.obtain();
+  // 初始化note
+
+  notes.add(note);
+}
+
+// 在Note结束时归还对象池  
+function onNoteEnd(note) {
+  notePool.free(note);
+  notes.remove(note);
+}
+
+// StrumNote同理
+function generateStrumNote() {
+  var strumNote = strumNotePool.obtain();
+  // 初始化
+
+  strumNotes.add(strumNote);
+}
+
+function onStrumNoteEnd(strumNote) {
+  strumNotePool.free(strumNote);
+  strumNotes.remove(strumNote);
+}
+
+// 其他代码
