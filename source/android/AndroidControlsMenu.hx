@@ -59,7 +59,7 @@ class AndroidControlsMenu extends MusicBeatState
 		hbox.visible = false;
 		add(hbox);
 		
-		newhbox = new FlxNewHitbox();
+		newhbox = new FlxNewHitbox(Modes.DEFAULT);
 		newhbox.visible = false;
 		add(newhbox);
 
