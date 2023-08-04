@@ -49,7 +49,7 @@ class HitboxSettingsSubState extends BaseOptionsMenu
 		  
 		var option:Option = new Option('Hitbox Opacity', //mariomaster was here again
 			'Changes opacity -omg',
-			'hitboxalpha',
+			'button',
 			'float',
 			0.2);
 		option.scrollSpeed = 1.6;
