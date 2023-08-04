@@ -422,7 +422,7 @@ class Controls extends FlxActionSet
 	}
 	
 	
-	public function setNewHitBox(Hitbox:FlxNewHitbox)
+	public function setNewHitBox(Hitbox:Hitbox)
 	{
 		inline forEachBound(Control.NOTE_UP, (action, state) -> addButtonNOTES(action, Hitbox.buttonUp, state));
 		inline forEachBound(Control.NOTE_DOWN, (action, state) -> addButtonNOTES(action, Hitbox.buttonDown, state));
