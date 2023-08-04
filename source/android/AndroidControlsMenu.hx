@@ -8,7 +8,7 @@ import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.addons.transition.FlxTransitionableState;
 import android.FlxHitbox;
-import android.FlxNewHitbox;
+import android.Hitbox;
 import android.AndroidControls.Config;
 import android.FlxVirtualPad;
 
@@ -18,7 +18,7 @@ class AndroidControlsMenu extends MusicBeatState
 {
 	var vpad:FlxVirtualPad;
 	var hbox:FlxHitbox;
-	var newhbox:FlxNewHitbox;
+	var newhbox:Hitbox;
 	var upPozition:FlxText;
 	var downPozition:FlxText;
 	var leftPozition:FlxText;
@@ -59,7 +59,7 @@ class AndroidControlsMenu extends MusicBeatState
 		hbox.visible = false;
 		add(hbox);
 		
-		newhbox = new FlxNewHitbox();
+		newhbox = new Hitbox();
 		newhbox.visible = false;
 		add(newhbox);
 
