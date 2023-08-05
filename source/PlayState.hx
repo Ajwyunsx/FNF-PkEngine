@@ -2250,8 +2250,7 @@ class PlayState extends MusicBeatState
 					case 4:
 				}
 
-				notes.forEachAlive(function(daNote:Note) {});
-strumLineNotes.forEachAlive(function(daNote:Note){}); {
+				notes.forEachAlive(function(daNote:Note) {
 					if(ClientPrefs.opponentStrums || note.mustPress)
 					{
 						note.copyAlpha = false;
@@ -3185,8 +3184,7 @@ strumLineNotes.forEachAlive(function(daNote:Note){}); {
 				if(startedCountdown)
 				{
 					var fakeCrochet:Float = (60 / SONG.bpm) * 1000;
-					notes.forEachAlive(function(daNote:Note) {});
-strumLineNotes.forEachAlive(function(daNote:Note){});
+					notes.forEachAlive(function(daNote:Note)
 					{
 						var strumGroup:FlxTypedGroup<StrumNote> = playerStrums;
 						if(!daNote.mustPress) strumGroup = opponentStrums;
@@ -3306,8 +3304,7 @@ strumLineNotes.forEachAlive(function(daNote:Note){});
 				}
 				else
 				{
-					notes.forEachAlive(function(daNote:Note) {});
-strumLineNotes.forEachAlive(function(daNote:Note){});
+					notes.forEachAlive(function(daNote:Note)
 					{
 						daNote.canBeHit = false;
 						daNote.wasGoodHit = false;
@@ -4341,8 +4338,7 @@ strumLineNotes.forEachAlive(function(daNote:Note){});
 				var notesStopped:Bool = false;
 
 				var sortedNotesList:Array<Note> = [];
-				notes.forEachAlive(function(daNote:Note) {});
-strumLineNotes.forEachAlive(function(daNote:Note){});
+				notes.forEachAlive(function(daNote:Note)
 				{
 					if (strumsBlocked[daNote.noteData] != true && daNote.canBeHit && daNote.mustPress && !daNote.tooLate && !daNote.wasGoodHit && !daNote.isSustainNote && !daNote.blockHit)
 					{
@@ -4474,8 +4470,7 @@ strumLineNotes.forEachAlive(function(daNote:Note){});
 		if (startedCountdown && !boyfriend.stunned && generatedMusic)
 		{
 			// rewritten inputs???
-			notes.forEachAlive(function(daNote:Note) {});
-strumLineNotes.forEachAlive(function(daNote:Note){});
+			notes.forEachAlive(function(daNote:Note)
 			{
 				// hold note functions
 				if (strumsBlocked[daNote.noteData] != true && daNote.isSustainNote && parsedHoldArray[daNote.noteData] && daNote.canBeHit
@@ -4526,8 +4521,7 @@ strumLineNotes.forEachAlive(function(daNote:Note){});
 
 	function noteMiss(daNote:Note):Void { //You didn't hit the key and let it go offscreen, also used by Hurt Notes
 		//Dupe note remove
-		notes.forEachAlive(function(daNote:Note) {});
-strumLineNotes.forEachAlive(function(daNote:Note){}); {
+		notes.forEachAlive(function(daNote:Note) {
 			if (daNote != note && daNote.mustPress && daNote.noteData == note.noteData && daNote.isSustainNote == note.isSustainNote && Math.abs(daNote.strumTime - note.strumTime) < 1) {
 				note.kill();
 				notes.remove(note, true);
