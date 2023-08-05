@@ -2703,39 +2703,75 @@ class PlayState extends MusicBeatState
 				else if(ClientPrefs.middleScroll) targetAlpha = 0.35;
 			}
 
-			var babyArrow:StrumNote = new StrumNote(ClientPrefs.middleScroll ? STRUM_X_MIDDLESCROLL : STRUM_X, strumLine.y, i, player);
-			babyArrow.downScroll = ClientPrefs.downScroll;
-			if (!isStoryMode && !skipArrowStartTween)
-			{
-				//babyArrow.y -= 10;
-				babyArrow.alpha = 0;
-				FlxTween.tween(babyArrow, {/*y: babyArrow.y + 10,*/ alpha: targetAlpha}, 1, {ease: FlxEase.circOut, startDelay: 0.5 + (0.2 * i)});
-			}
-			else
-			{
-				babyArrow.alpha = targetAlpha;
-			}
+			// 在类成员位置
 
-			if (player == 1)
-			{
-				playerStrums.add(babyArrow);
-			}
-			else
-			{
-				if(ClientPrefs.middleScroll)
-				{
-					babyArrow.x += 310;
-					if(i > 1) { //Up and Right
-						babyArrow.x += FlxG.width / 2 + 25;
-					}
-				}
-				opponentStrums.add(babyArrow);
-			}
+private var strumNotes:FlxTypedGroup<StrumNote>; // 容器
+private var strumNotePool:Array<StrumNote> = []; // 对象池
 
-			strumLineNotes.add(babyArrow);
-			babyArrow.postAddedToGroup();
-		}
-	}
+private var isTweenNeeded:Bool; // 是否需要补间动画
+private const STRUM_X_OFFSET = 20;
+
+// 在生成静态箭头的方法中
+
+function generateStaticArrows() {
+
+  isTweenNeeded = !isStoryMode && !skipArrowStartTween;
+  
+  // 初始化对象池
+  initStrumNotePool(); 
+
+  for (i in 0...4) {
+
+    var babyArrow = reuseStrumNote();
+    
+    babyArrow.x = STRUM_X + STRUM_X_OFFSET * i;
+    babyArrow.y = strumLine.y;
+    // 其他通用属性重置
+
+    if (player == 1) {
+      playerStrums.add(babyArrow);
+    } else {
+      opponentStrums.add(babyArrow);    
+    }
+
+    // 批量添加
+    strumNotes.add(babyArrow);
+
+  }
+
+  // 批量处理补间动画
+  if (isTweenNeeded) {
+    tweenStrumNotes(); 
+  }
+
+  positionStrumNotes();
+
+}
+
+// 从对象池复用
+function reuseStrumNote() {
+  return strumNotePool.length > 0 ? strumNotePool.pop() : new StrumNote();
+} 
+
+// 位置设置
+function positionStrumNotes() {
+  strumNotes.forEach(function(note) {
+    // 设置每个 note 的位置
+    // ...
+  });
+}
+
+// 补间动画
+function tweenStrumNotes() {
+  strumNotes.forEach(function(note) {
+    FlxTween.tween(note, {alpha: 1}, 1, {/* ease, delay */}); 
+  });
+} 
+
+// 初始化对象池
+function initStrumNotePool() {
+  // 创建若干 StrumNote 到对象池
+}
 
 	override function openSubState(SubState:FlxSubState)
 	{
