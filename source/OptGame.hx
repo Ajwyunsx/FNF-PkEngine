@@ -1,59 +1,55 @@
-import haxe.ds.Vector;
-import sys.db.Object;
-import sys.db.Types;
+// 主类
+import openfl.display.Sprite;
 
-class GameObject {}
-
-class ObjectPool {
-
-  public var pools:Map<String, Vector<Dynamic>> = new Map();
-  public var maxSize = 100;
+class Main extends Sprite {
 
   public function new() {
-  }
-
-  public function getObject(type:String):Dynamic {
-    if(!pools.exists(type)) {
-      pools[type] = new Vector();
-    }
-
-    var pool = pools[type];
-    if(pool.length > 0) {
-      return pool.pop();
-    } else {
-      return Type.createInstance(Type.resolveClass(type), []);
-    }
-  }
-
-  public function freeObject(obj:Dynamic, type:String) {
-    if (!pools.exists(type)) return;
-
-    var pool = pools[type];
-    if(pool.length >= maxSize) return;
-
-    pool.push(obj);
-  }
-
-  public function clearPool(type:String) {
-    if (!pools.exists(type)) return;
+    super();
     
-    pools[type] = new Vector();
+    // 初始化游戏
+    initGame();
+    
+    // 检查Android版本
+    checkAndroidVersion();
+  }
+
+  function initGame() {
+    // 使用OpenFL编写游戏逻辑
+    
+  }
+
+  function checkAndroidVersion() {
+    #if android
+      // Android 5.0以上
+      #if (android && android_version >= 21)
+
+        // 创建线程池
+        sys.thread.Thread.createThreadPool(4);
+
+        // 用线程池加载资源
+        sys.thread.ThreadPool.queue(function() {
+          // 加载资源
+        });
+
+        // OpenGL渲染
+        Lib.current.addChild(new OpenGLRenderer());
+
+      #end
+    #end
   }
 
 }
 
 
-class Main {
+// OpenGL渲染器
+import openfl.display.Sprite;
+import extension.renderer.OpenGLRenderer;
 
-  static function main() {
-    var pool = new ObjectPool();
-
-    var obj1:GameObject = cast pool.getObject("GameObject");
-    pool.freeObject(obj1, "GameObject");
-
-    var obj2:String = cast pool.getObject("String"); 
-    pool.freeObject(obj2, "String");
-
-  }
+class OpenGLRenderer extends Sprite {
+  
+  public function new() {
+    super();
+    // 初始化渲染器
+  } 
 
 }
