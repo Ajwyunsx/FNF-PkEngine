@@ -48,8 +48,19 @@ class HitboxSettingsSubState extends BaseOptionsMenu
 		  addOption(option);
 		  
 		var option:Option = new Option('Hitbox Opacity', //mariomaster was here again
-			'Changes opacity -omg',
+			'Changes opacity',
 			'hitboxalpha',
+			'float',
+			0.2);
+		option.scrollSpeed = 1.6;
+		option.minValue = 0.0;
+		option.maxValue = 1;
+		option.changeValue = 0.1;
+		option.decimals = 1;
+		addOption(option);
+		var option:Option = new Option('VirtualPad Opacity', //Ajwwkak was here again
+			'Changes opacity',
+			'virtualPadAlpha',
 			'float',
 			0.2);
 		option.scrollSpeed = 1.6;
