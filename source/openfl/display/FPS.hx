@@ -135,7 +135,7 @@ class FPS extends TextField
 			{
 				// textColor = 0xFFFF0000;
 				text = "FPS: " + currentFPS;
-				text += "\nMemory: " + newmemoryMegas + " GB";
+				text += "\nMemory: " + memoryMegas + " MB";
 				text += "\nPk Engine: " + pkEngineVersion;
 			}
 
