@@ -59,6 +59,7 @@ class FPS extends TextField
 		times = [];
 
         pkEngineVersion = "v0.5.0";
+        
 		#if flash
 		addEventListener(Event.ENTER_FRAME, function(e)
 		{
@@ -126,12 +127,16 @@ class FPS extends TextField
 			#if openfl
 			memoryMegas = Math.abs(FlxMath.roundDecimal(System.totalMemory / 1000000, 1));
 			text += "\nMemory: " + memoryMegas + " MB";
-			#end
 			text += "\nPk Engine: " + pkEngineVersion;
-			textColor = 0xFFFFFFFF;
+			#end
+			var memoryMegas:Float = 0;
+			
 			if (memoryMegas > 3000 || currentFPS <= ClientPrefs.framerate / 2)
 			{
-				textColor = 0xFFFF0000;
+				// textColor = 0xFFFF0000;
+				text = "FPS: " + currentFPS;
+				text += "\nMemory: " + newmemoryMegas + " GB";
+				text += "\nPk Engine: " + pkEngineVersion;
 			}
 
 			#if (gl_stats && !disable_cffi && (!html5 || !canvas))
