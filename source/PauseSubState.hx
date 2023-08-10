@@ -248,17 +248,11 @@ class PauseSubState extends MusicBeatSubstate
 				case "Restart Song":
 					restartSong();
 				case 'Options':
-					optionMenu = true;
+					wasinsongbeforethenwenttooptions = true;
 					PlayState.deathCounter = 0;
 					PlayState.seenCutscene = false;
-					PlayState.instance.vocals.volume = 0;
 					MusicBeatState.switchState(new options.OptionsState());
-					if(ClientPrefs.pauseMusic != 'None')
-					{
-						FlxG.sound.playMusic(Paths.music(Paths.formatToSongPath(ClientPrefs.pauseMusic)), pauseMusic.volume);
-						FlxTween.tween(FlxG.sound.music, {volume: 1}, 0.8);
-						FlxG.sound.music.time = pauseMusic.time;
-					};
+					FlxG.sound.playMusic(Paths.music('freakyMenu'));
 				case "Leave Charting Mode":
 					restartSong();
 					PlayState.chartingMode = false;
