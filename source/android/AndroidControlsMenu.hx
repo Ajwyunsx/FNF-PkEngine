@@ -8,7 +8,6 @@ import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.addons.transition.FlxTransitionableState;
 import android.FlxHitbox;
-import android.Hitbox;
 import android.FlxNewHitbox;
 import android.AndroidControls.Config;
 import android.FlxVirtualPad;
@@ -19,7 +18,6 @@ class AndroidControlsMenu extends MusicBeatState
 {
 	var vpad:FlxVirtualPad;
 	var hbox:FlxHitbox;
-	var idiehbox:Hitbox;
 	var newhbox:FlxNewHitbox;
 	var upPozition:FlxText;
 	var downPozition:FlxText;
@@ -65,9 +63,6 @@ class AndroidControlsMenu extends MusicBeatState
 		newhbox.visible = false;
 		add(newhbox);
 		
-		idiehbox = new Hitbox(mode);
-		idiehbox.visible = false;
-		add(idiehbox);
 
 		inputvari = new PsychAlphabet(0, 50, controlitems[curSelected], false, false, 0.05, 0.8);
 		inputvari.screenCenter(X);
@@ -192,7 +187,6 @@ class AndroidControlsMenu extends MusicBeatState
 		{
 			hbox.visible = false;
 			newhbox.visible = false;
-			idiehbox.visible = false;
 		}
 		else
 		{
@@ -206,23 +200,9 @@ class AndroidControlsMenu extends MusicBeatState
 
   }
 
-  idiehbox.visible = true;
 
-}
 
-		if(ClientPrefs.hitboxmode != 'idiecors') {
-
-    hbox.visible = true;
-
-  } else {
-
-    newhbox.visible = true;
-
-  }
-
-  idiehbox.visible = true;
-
-	}
+		
 
 		if (daChoice != "Pad-Custom")
 		{
