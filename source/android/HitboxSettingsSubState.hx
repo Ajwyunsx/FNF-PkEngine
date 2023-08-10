@@ -69,6 +69,18 @@ class HitboxSettingsSubState extends BaseOptionsMenu
 		option.changeValue = 0.1;
 		option.decimals = 1;
 		addOption(option);
+		var option:Option = new Option('indie Hitbox Pose', 'if unchecked, hitboxes for mechanics would be at the top instead of bottom', 'mechsInputVariants',
+			'bool', true);
+		addOption(option);
+		var option:Option = new Option('Gradient indie Hitboxes', 'if checked, hitboxes would have gradient', 'gradientHitboxes', 'bool', false);
+		addOption(option);
+		var option:Option = new Option('indie Hitbox Opacity', 'allows you to customize opacity of hitboxes', 'hitboxOpacity', 'percent', 0.3); // by Sirox228
+		option.scrollSpeed = 1.6;
+		option.minValue = 0.0;
+		option.maxValue = 1;
+		option.changeValue = 0.1;
+		option.decimals = 1;
+		addOption(option);
 
 		super();
 	}
