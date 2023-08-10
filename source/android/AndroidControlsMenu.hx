@@ -65,7 +65,7 @@ class AndroidControlsMenu extends MusicBeatState
 		newhbox.visible = false;
 		add(newhbox);
 		
-		idiehbox = new Hitbox();
+		idiehbox = new Hitbox(mode);
 		idiehbox.visible = false;
 		add(idiehbox);
 
