@@ -209,7 +209,7 @@ class AndroidControlsMenu extends MusicBeatState
   idiehbox.visible = true;
 
 }
-		else {
+
 		if(ClientPrefs.hitboxmode != 'idiecors') {
 
     hbox.visible = true;
