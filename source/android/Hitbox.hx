@@ -1,7 +1,6 @@
 package android;
 
 import flixel.graphics.FlxGraphic;
-import android.flixel.FlxButtonPlus;
 import flixel.FlxSprite;
 import flixel.FlxG;
 import flixel.graphics.frames.FlxTileFrames;
