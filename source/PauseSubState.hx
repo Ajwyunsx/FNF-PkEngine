@@ -4,8 +4,6 @@ import Controls.Control;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxSubState;
-import flixel.addons.display.FlxBackdrop;
-import flixel.addons.display.FlxGridOverlay;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.input.keyboard.FlxKey;
@@ -22,20 +20,21 @@ class PauseSubState extends MusicBeatSubstate
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
 
 	var menuItems:Array<String> = [];
-	var menuItemsOG:Array<String> = ['Resume', 'Restart Song', 'Options', 'Change Difficulty' #if android, 'Chart Editor' #end, 'Exit to menu'];
+	var menuItemsOG:Array<String> = ['Resume', 'Restart Song', 'Options', 'Toggle Botplay', 'Change Difficulty' #if android, 'Chart Editor' #end, 'Exit to menu'];
 	var difficultyChoices = [];
 	var curSelected:Int = 0;
 
 	var pauseMusic:FlxSound;
-	var velocityBackground:FlxBackdrop;
 	var practiceText:FlxText;
+	
+	public static var optionMenu:Bool;
+
 	var skipTimeText:FlxText;
 	var skipTimeTracker:Alphabet;
 	var curTime:Float = Math.max(0, Conductor.songPosition);
 	//var botplayText:FlxText;
 
 	public static var songName:String = '';
-	public static var wasinsongbeforethenwenttooptions:Bool;
 
 	public function new(x:Float, y:Float)
 	{
@@ -47,14 +46,9 @@ class PauseSubState extends MusicBeatSubstate
 			menuItemsOG.insert(2, 'Leave Charting Mode');
 			
 			var num:Int = 0;
-			if(!PlayState.instance.startingSong)
-			{
-				num = 1;
-				menuItemsOG.insert(3, 'Skip Time');
-			}
+			
 			menuItemsOG.insert(3 + num, 'End Song');
-			menuItemsOG.insert(4 + num, 'Toggle Practice Mode');
-			menuItemsOG.insert(5 + num, 'Toggle Botplay');
+			menuItemsOG.insert(4 + num, 'Practice Mode');
 		}
 		menuItems = menuItemsOG;
 
@@ -80,13 +74,6 @@ class PauseSubState extends MusicBeatSubstate
 		bg.alpha = 0;
 		bg.scrollFactor.set();
 		add(bg);
-
-		velocityBackground = new FlxBackdrop(FlxGridOverlay.createGrid(30, 30, 60, 60, true, 0x3B161932, 0x0));
-		velocityBackground.velocity.set(FlxG.random.bool(50) ? 90 : -90, FlxG.random.bool(50) ? 90 : -90);
-		velocityBackground.antialiasing = ClientPrefs.globalAntialiasing;
-		velocityBackground.alpha = 0;
-		FlxTween.tween(velocityBackground, {alpha: 1}, 0.5, {ease: FlxEase.quadOut});
-		add(velocityBackground);
 
 		var levelInfo:FlxText = new FlxText(20, 15, 0, "", 32);
 		levelInfo.text += PlayState.SONG.song;
@@ -152,7 +139,7 @@ class PauseSubState extends MusicBeatSubstate
 		}
 		else
 		{
-		        addVirtualPad(UP_DOWN, A);
+		        addVirtualPad(FULL, A);
 		}
 		addPadCamera();
 		#end
@@ -241,18 +228,12 @@ class PauseSubState extends MusicBeatSubstate
 					menuItems = difficultyChoices;
 					deleteSkipTimeText();
 					regenMenu();
-				case 'Toggle Practice Mode':
+				case 'Practice Mode':
 					PlayState.instance.practiceMode = !PlayState.instance.practiceMode;
 					PlayState.changedDifficulty = true;
 					practiceText.visible = PlayState.instance.practiceMode;
 				case "Restart Song":
 					restartSong();
-				case 'Options':
-					wasinsongbeforethenwenttooptions = true;
-					PlayState.deathCounter = 0;
-					PlayState.seenCutscene = false;
-					MusicBeatState.switchState(new options.OptionsState());
-					FlxG.sound.playMusic(Paths.music('freakyMenu'));
 				case "Leave Charting Mode":
 					restartSong();
 					PlayState.chartingMode = false;
@@ -280,9 +261,15 @@ class PauseSubState extends MusicBeatSubstate
 					PlayState.instance.botplayTxt.visible = PlayState.instance.cpuControlled;
 					PlayState.instance.botplayTxt.alpha = 1;
 					PlayState.instance.botplaySine = 0;
-                                case 'Chart Editor':
-		                        MusicBeatState.switchState(new editors.ChartingState());
-		                        PlayState.chartingMode = true;
+                case 'Chart Editor':
+		            MusicBeatState.switchState(new editors.ChartingState());
+		            PlayState.chartingMode = true;
+		        case 'Options':
+					optionMenu = true;
+					PlayState.deathCounter = 0;
+					PlayState.seenCutscene = false;
+					MusicBeatState.switchState(new options.OptionsState());
+					FlxG.sound.playMusic(Paths.music('freakyMenu'));
 				case "Exit to menu":
 					PlayState.deathCounter = 0;
 					PlayState.seenCutscene = false;
@@ -383,6 +370,7 @@ class PauseSubState extends MusicBeatSubstate
 		for (i in 0...menuItems.length) {
 			var item = new Alphabet(90, 320, menuItems[i], true);
 			item.isMenuItem = true;
+			item.screenCenter();
 			item.targetY = i;
 			grpMenuShit.add(item);
 
@@ -407,8 +395,8 @@ class PauseSubState extends MusicBeatSubstate
 	{
 		if(skipTimeText == null || skipTimeTracker == null) return;
 
-		skipTimeText.x = skipTimeTracker.x + skipTimeTracker.width + 60;
-		skipTimeText.y = skipTimeTracker.y;
+		skipTimeText.x = skipTimeTracker.x + skipTimeTracker.width + 60 + 200;
+		skipTimeText.y = 320;
 		skipTimeText.visible = (skipTimeTracker.alpha >= 1);
 	}
 
