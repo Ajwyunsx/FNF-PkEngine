@@ -68,6 +68,7 @@ import openfl.filters.ShaderFilter;
 #end
 import openfl.filters.ShaderFilter;
 import Shaders;
+import DynamicShaderHandler;
 import openfl.display.Shader;
 #if sys
 import sys.FileSystem;
@@ -153,6 +154,7 @@ class PlayState extends MusicBeatState
 	public var spawnTime:Float = 2000;
 
 	public var vocals:FlxSound;
+	public var shader_chromatic_abberation:ChromaticAberrationEffect;
 
 	public var dad:Character = null;
 	public var gf:Character = null;
@@ -315,6 +317,7 @@ class PlayState extends MusicBeatState
 	public var luaArray:Array<FunkinLua> = [];
 	private var luaDebugGroup:FlxTypedGroup<DebugLuaText>;
 	public var introSoundsSuffix:String = '';
+	public var luaShaders:Map<String, DynamicShaderHandler> = new Map<String, DynamicShaderHandler>();
 
 	// Debug buttons
 	private var debugKeysChart:Array<FlxKey>;
