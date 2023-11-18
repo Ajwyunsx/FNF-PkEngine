@@ -150,6 +150,7 @@ class PlayState extends MusicBeatState
 	public static var storyWeek:Int = 0;
 	public static var storyPlaylist:Array<String> = [];
 	public static var storyDifficulty:Int = 1;
+	public static var animatedShaders:Map<String, DynamicShaderHandler> = new Map<String, DynamicShaderHandler>();
 
 	public var spawnTime:Float = 2000;
 
@@ -168,6 +169,7 @@ class PlayState extends MusicBeatState
 	public var camGameShaders:Array<ShaderEffect> = [];
     public var camHUDShaders:Array<ShaderEffect> = [];
     public var camOtherShaders:Array<ShaderEffect> = [];
+    
 
 	private var strumLine:FlxSprite;
 
