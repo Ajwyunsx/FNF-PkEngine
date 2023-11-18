@@ -66,7 +66,9 @@ import flixel.system.FlxAssets.FlxShader;
 import flixel.addons.display.FlxRuntimeShader;
 import openfl.filters.ShaderFilter;
 #end
-
+import openfl.filters.ShaderFilter;
+import Shaders;
+import openfl.display.Shader;
 #if sys
 import sys.FileSystem;
 import sys.io.File;
@@ -159,6 +161,8 @@ class PlayState extends MusicBeatState
 	public var notes:FlxTypedGroup<Note>;
 	public var unspawnNotes:Array<Note> = [];
 	public var eventNotes:Array<EventNote> = [];
+	
+	public var shaderUpdates:Array<Float->Void> = [];
 
 	private var strumLine:FlxSprite;
 
@@ -3331,6 +3335,10 @@ class PlayState extends MusicBeatState
 		setOnLuas('cameraY', camFollowPos.y);
 		setOnLuas('botPlay', cpuControlled);
 		callOnLuas('onUpdatePost', [elapsed]);
+		
+		for (i in shaderUpdates){
+			i(elapsed);
+			}
 	}
 
 	function openPauseMenu()
