@@ -38,17 +38,7 @@ class HitboxSettingsSubState extends BaseOptionsMenu
 	{
 		title = 'Hitbox Settings';
 		rpcTitle = 'Hitbox Settings Menu'; //hi, you can ask what is that, i will answer it's all what you needed lol.
-		var option:Option = new Option('Space Shift Extend',
-			"Space and Shift",
-			'hitboxPT',
-			'bool');
-		  addOption(option);
-		var option:Option = new Option('Space Location:',
-			"Choose Space Control Location",
-			'hitboxLocation',
-			'string',
-			['Space', 'Shift', 'Two']);
-		  addOption(option);  
+		
 
 		var option:Option = new Option('Hitbox Mode:',
 			"Choose your Hitbox Style!  -mariomaster",
