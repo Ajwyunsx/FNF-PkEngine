@@ -23,6 +23,9 @@ import WeekData;
 #if MODS_ALLOWED
 import sys.FileSystem;
 #end
+import openfl.filters.ShaderFilter;
+import Shaders;
+import openfl.display.Shader;
 
 using StringTools;
 
@@ -66,7 +69,9 @@ class FreeplayState extends MusicBeatState
 		// Updating Discord Rich Presence
 		DiscordClient.changePresence("In the Menus", null);
 		#end
-
+                var shader:Shaders.ChromaticAberrationEffect = new Shaders.ChromaticAberrationEffect();
+		shader.setChrome(0.005);
+		FlxG.camera.setFilters([new ShaderFilter(shader.shader)]);
 		for (i in 0...WeekData.weeksList.length) {
 			if(weekIsLocked(WeekData.weeksList[i])) continue;
 
