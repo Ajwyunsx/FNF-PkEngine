@@ -34,7 +34,7 @@ class DynamicShaderHandler
 
 	public function new(fileName:String, optimize:Bool = false)
 	{
-		var path = Paths.modsShaderFragment(fileName);
+		var path = Paths.ShaderFragment(fileName);
 		trace(path);
 		if (!FileSystem.exists(path)) path = Paths.shaderFragment(fileName);
 		
@@ -47,7 +47,7 @@ class DynamicShaderHandler
 		}
 
 		
-		var path2 = Paths.modsShaderVertex(fileName);
+		var path2 = Paths.ShaderVertex(fileName);
 		trace(path2);
 		if (!FileSystem.exists(path2)) path2 = Paths.shaderVertex(fileName);
 		
@@ -61,7 +61,7 @@ class DynamicShaderHandler
 
 		if (fragSource != "" || vertSource != "")
 		{
-			shader = new FlxGraphicsShader(fragSource, optimize, vertSource);
+			shader = new FlxGraphicsShader(fragSource, optimize);
 		}
 
 		if (shader == null)
@@ -84,7 +84,7 @@ class DynamicShaderHandler
 		#if LUA_ALLOWED 
 		PlayState.instance.luaShaders[fileName] = this;
 		#end
-		PlayState.animatedShaders[fileName] = this;
+		PlayState.animatedShaders[(fileName)] = this;
 	
 			//trace(shader.data.get('rOffset'));
 		
