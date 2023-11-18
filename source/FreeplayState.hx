@@ -70,7 +70,7 @@ class FreeplayState extends MusicBeatState
 		DiscordClient.changePresence("In the Menus", null);
 		#end
                 var shader:Shaders.ChromaticAberrationEffect = new Shaders.ChromaticAberrationEffect();
-		shader.setChrome(0.005);
+		shader.setChrome(0.003);
 		FlxG.camera.setFilters([new ShaderFilter(shader.shader)]);
 		for (i in 0...WeekData.weeksList.length) {
 			if(weekIsLocked(WeekData.weeksList[i])) continue;
