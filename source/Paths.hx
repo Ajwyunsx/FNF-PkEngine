@@ -185,6 +185,14 @@ class Paths
 	{
 		return getPath('shaders/$key.vert', TEXT, library);
 	}
+	inline static public function modsShaderFragment(key:String, ?library:String)
+	{
+		return modFolders('shaders/'+key+'.frag');
+	}
+	inline static public function modsShaderVertex(key:String, ?library:String)
+	{
+		return modFolders('shaders/'+key+'.vert');
+	}
 	inline static public function lua(key:String, ?library:String)
 	{
 		return getPath('$key.lua', TEXT, library);
