@@ -537,7 +537,7 @@ class PlayState extends MusicBeatState
 
 		scripts.executeAllFunc("create");
 
-		if (!ScriptUtil.hasPause(scripts.executeAllFunc("createStage", [curStage])))H
+		if (!ScriptUtil.hasPause(scripts.executeAllFunc("createStage", [curStage])))
 
 		switch (curStage)
 		{
