@@ -1573,11 +1573,7 @@ class PlayState extends MusicBeatState
 	  
   }
 	
-	public static inline function getInstance()
-	{
-		return PlayState.instance.isDead ? GameOverSubstate.instance : PlayState.instance;
-	}
-}
+	
 	
   public function clearShaderFromCamera(cam:String){
 	  
@@ -5775,3 +5771,8 @@ function initCharScript(char:Character)
 	}
 
 	
+public static function getInstance()
+	{
+		return PlayState.instance.isDead ? GameOverSubstate.instance : PlayState.instance;
+	}
+}
