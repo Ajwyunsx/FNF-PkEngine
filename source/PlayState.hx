@@ -61,6 +61,9 @@ import FunkinLua;
 import DialogueBoxPsych;
 import Conductor.Rating;
 import flixel.system.FlxAssets.FlxShader;
+import script.Script;
+import script.ScriptGroup;
+import script.ScriptUtil;
 
 #if !flash 
 import flixel.addons.display.FlxRuntimeShader;
@@ -339,6 +342,8 @@ class PlayState extends MusicBeatState
 	public static var lastCombo:FlxSprite;
 	// stores the last combo score objects in an array
 	public static var lastScore:Array<FlxSprite> = [];
+	
+	public var scripts:ScriptGroup;
 
 	override public function create()
 	{
@@ -347,6 +352,11 @@ class PlayState extends MusicBeatState
 
 		// for lua
 		instance = this;
+		
+
+		scripts = new ScriptGroup();
+		scripts.onAddScript.push(onAddScript);
+		Character.onCreate = initCharScript;
 
 		debugKeysChart = ClientPrefs.copyKey(ClientPrefs.keyBinds.get('debug_1'));
 		debugKeysCharacter = ClientPrefs.copyKey(ClientPrefs.keyBinds.get('debug_2'));
