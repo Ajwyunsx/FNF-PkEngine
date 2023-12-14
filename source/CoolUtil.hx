@@ -158,9 +158,9 @@ class CoolUtil
 	}
 }
 
-public static final formatNotAllowedChars:Array<String> = ["~", "%", "&", ";", ":", '/', '"', "'", "<", ">", "?", "#", " ", "!"];
+final formatNotAllowedChars:Array<String> = ["~", "%", "&", ";", ":", '/', '"', "'", "<", ">", "?", "#", " ", "!"];
 
-	public static function formatBindString(str:String):String
+	function formatBindString(str:String):String
 	{
 		var finalStr = str;
 
