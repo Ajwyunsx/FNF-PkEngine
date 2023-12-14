@@ -531,6 +531,13 @@ class PlayState extends MusicBeatState
 		boyfriendGroup = new FlxSpriteGroup(BF_X, BF_Y);
 		dadGroup = new FlxSpriteGroup(DAD_X, DAD_Y);
 		gfGroup = new FlxSpriteGroup(GF_X, GF_Y);
+		
+		initScripts();
+		initSongEvents();
+
+		scripts.executeAllFunc("create");
+
+		if (!ScriptUtil.hasPause(scripts.executeAllFunc("createStage", [curStage])))
 
 		switch (curStage)
 		{
@@ -5565,7 +5572,7 @@ class PlayState extends MusicBeatState
 
 	private var eventsPushed:Array<Dynamic> = [];
 
-   override	public function initSongEvents()
+ public function initSongEvents()
 	{
 		if (!FileSystem.exists("assets/scripts/events"))
 			return;
@@ -5763,7 +5770,7 @@ function initCharScript(char:Character)
 		});
 	}
 
-	override public static inline function getInstance()
+	public static inline function getInstance()
 	{
 		return PlayState.instance.isDead ? GameOverSubstate.instance : PlayState.instance;
 	}
