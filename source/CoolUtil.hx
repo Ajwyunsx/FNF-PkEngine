@@ -7,6 +7,11 @@ import lime.utils.Assets as LimeAssets;
 import lime.utils.AssetLibrary;
 import lime.utils.AssetManifest;
 import flixel.system.FlxSound;
+import haxe.display.Display.Package;
+import haxe.io.Path;
+import PlayState;
+import Paths;
+import discord_rpc.DiscordRpc.ErrorCallback;
 #if sys
 import sys.io.File;
 import sys.FileSystem;
@@ -151,4 +156,57 @@ class CoolUtil
 			+ '/'
 			+ FlxSave.validate(FlxG.stage.application.meta.get('file')) #end;
 	}
+}
+
+public static final formatNotAllowedChars:Array<String> = ["~", "%", "&", ";", ":", '/', '"', "'", "<", ">", "?", "#", " ", "!"];
+
+	public static function formatBindString(str:String):String
+	{
+		var finalStr = str;
+
+		for (notAllowed in formatNotAllowedChars)
+		{
+			finalStr = StringTools.replace(finalStr, notAllowed, "");
+		}
+
+		return finalStr.toLowerCase();
+	}
+
+	public static function findFilesInPath(path:String, extns:Array<String>, ?filePath:Bool = false, ?deepSearch:Bool = true):Array<String>
+	{
+		var files:Array<String> = [];
+
+		if (FileSystem.exists(path))
+		{
+			for (file in FileSystem.readDirectory(path))
+			{
+				var path = haxe.io.Path.join([path, file]);
+				if (!FileSystem.isDirectory(path))
+				{
+					for (extn in extns)
+					{
+						if (file.endsWith(extn))
+						{
+							if (filePath)
+								files.push(path);
+							else
+								files.push(file);
+						}
+					}
+				}
+				else if (deepSearch) // ! YAY !!!! -lunar
+				{
+					var pathsFiles:Array<String> = findFilesInPath(path, extns);
+
+					for (_ in pathsFiles)
+						files.push(_);
+				}
+			}
+		}
+		return files;
+	}
+
+	function getFileStringFromPath(file:String):String
+	{
+		return Path.withoutDirectory(Path.withoutExtension(file));
 }
