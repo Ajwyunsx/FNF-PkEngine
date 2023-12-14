@@ -537,7 +537,7 @@ class PlayState extends MusicBeatState
 
 		scripts.executeAllFunc("create");
 
-		if (!ScriptUtil.hasPause(scripts.executeAllFunc("createStage", [curStage])))
+		if (!ScriptUtil.hasPause(scripts.executeAllFunc("createStage", [curStage])))H
 
 		switch (curStage)
 		{
@@ -5572,7 +5572,7 @@ class PlayState extends MusicBeatState
 
 	private var eventsPushed:Array<Dynamic> = [];
 
- public function initSongEvents()
+ function initSongEvents()
 	{
 		if (!FileSystem.exists("assets/scripts/events"))
 			return;
