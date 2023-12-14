@@ -34,7 +34,7 @@ import song.Conductor;
 import song.Section;
 import song.Song;
 import PlayState;
-import util.CoolUtil;
+import CoolUtil;
 #if sys
 import sys.FileSystem;
 import sys.io.File;
