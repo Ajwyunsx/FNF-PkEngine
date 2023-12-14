@@ -5495,7 +5495,7 @@ class PlayState extends MusicBeatState
 	var curLightEvent:Int = -1;
 }
 
-function initScripts()
+override function initScripts()
 	{
 		if (scripts == null)
 			return;
@@ -5565,7 +5565,7 @@ function initScripts()
 
 	private var eventsPushed:Array<Dynamic> = [];
 
-	public function initSongEvents()
+   override	public function initSongEvents()
 	{
 		if (!FileSystem.exists("assets/scripts/events"))
 			return;
@@ -5622,9 +5622,9 @@ function initScripts()
 		}
 	}
 
-	function initEventScript(name:String) {}
+	override function initEventScript(name:String) {}
 
-	function initCharScript(char:Character)
+	override function initCharScript(char:Character)
 	{
 		if (char == null || scripts == null)
 			return;
@@ -5654,7 +5654,7 @@ function initScripts()
 		}
 	}
 
-	function onAddScript(script:Script)
+	override function onAddScript(script:Script)
 	{
 		script.set("PlayState", PlayState);
 		script.set("game", PlayState.instance);
@@ -5763,7 +5763,7 @@ function initScripts()
 		});
 	}
 
-	public static inline function getInstance()
+	override public static inline function getInstance()
 	{
 		return PlayState.instance.isDead ? GameOverSubstate.instance : PlayState.instance;
 	}
