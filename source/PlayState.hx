@@ -68,7 +68,8 @@ import openfl.filters.ShaderFilter;
 #end
 import openfl.filters.ShaderFilter;
 import Shaders;
-import DynamicShaderHandler;
+import openfl.display.GraphicsShader;
+import flixel.graphics.tile.FlxGraphicsShader;
 import openfl.display.Shader;
 #if sys
 import sys.FileSystem;
@@ -169,6 +170,7 @@ class PlayState extends MusicBeatState
 	public var camGameShaders:Array<ShaderEffect> = [];
     public var camHUDShaders:Array<ShaderEffect> = [];
     public var camOtherShaders:Array<ShaderEffect> = [];
+    public var shader:FlxGraphicsShader;
     
 
 	private var strumLine:FlxSprite;
@@ -5481,4 +5483,278 @@ class PlayState extends MusicBeatState
 
 	var curLight:Int = -1;
 	var curLightEvent:Int = -1;
+}
+
+function initScripts()
+	{
+		if (scripts == null)
+			return;
+
+		var scriptData:Map<String, String> = [];
+
+		// SONG && GLOBAL SCRIPTS
+		var files:Array<String> = SONG.song == null ? [] : ScriptUtil.findScriptsInDir(Paths.getPreloadPath("data/" + Paths.formatToSongPath(SONG.song)));
+
+		if (FileSystem.exists("assets/scripts/global"))
+		{
+			for (_ in ScriptUtil.findScriptsInDir("assets/scripts/global"))
+				files.push(_);
+		}
+
+		for (file in files)
+		{
+			var hx:Null<String> = null;
+
+			if (FileSystem.exists(file))
+				hx = File.getContent(file);
+
+			if (hx != null)
+			{
+				var scriptName:String = CoolUtil.getFileStringFromPath(file);
+
+				if (!scriptData.exists(scriptName))
+				{
+					scriptData.set(scriptName, hx);
+				}
+			}
+		}
+
+		// STAGE SCRIPTS
+		if (SONG.stage != null)
+		{
+			var hx:Null<String> = null;
+
+			for (extn in ScriptUtil.extns)
+			{
+				var path:String = Paths.getPreloadPath('stages/' + SONG.stage + '.$extn');
+
+				if (FileSystem.exists(path))
+				{
+					hx = File.getContent(path);
+					break;
+				}
+			}
+
+			if (hx != null)
+			{
+				if (!scriptData.exists("stage"))
+					scriptData.set("stage", hx);
+			}
+		}
+
+		for (scriptName => hx in scriptData)
+		{
+			if (scripts.getScriptByTag(scriptName) == null)
+				scripts.addScript(scriptName).executeString(hx);
+			else
+			{
+				scripts.getScriptByTag(scriptName).error("Duplacite Script Error!", '$scriptName: Duplicate Script');
+			}
+		}
+	}
+
+	private var eventsPushed:Array<Dynamic> = [];
+
+	public function initSongEvents()
+	{
+		if (!FileSystem.exists("assets/scripts/events"))
+			return;
+
+		var jsonFiles:Array<String> = CoolUtil.findFilesInPath("assets/scripts/events", ["json"], true, false);
+
+		var hxFiles:Map<String, String> = [];
+
+		if (FileSystem.exists('assets/scripts/events/${Paths.formatToSongPath(SONG.song)}'))
+		{
+			for (file in CoolUtil.findFilesInPath('assets/scripts/events/${Paths.formatToSongPath(SONG.song)}', ["json"], true, true))
+				jsonFiles.push(file);
+		}
+
+		for (file in jsonFiles)
+		{
+			var json:{val1:String, val2:String} = {val1: null, val2: null};
+			if (FileSystem.exists(file))
+			{
+				try
+				{
+					json = cast Json.parse(File.getContent(file));
+				}
+				catch (e)
+				{
+					trace(e);
+				}
+			}
+
+			var eventName:String = CoolUtil.getFileStringFromPath(file);
+
+			eventsPushed.push([eventName, '${json.val1}\n${json.val2}']);
+			ChartingState.eventStuff.push([eventName, '${json.val1}\n${json.val2}']);
+
+			for (extn in ScriptUtil.extns)
+			{
+				var path:String = file.replace(".json", '.$extn');
+				if (FileSystem.exists(path))
+				{
+					hxFiles.set(CoolUtil.getFileStringFromPath(path), File.getContent(path));
+					break;
+				}
+			}
+		}
+
+		for (scriptName => hxData in hxFiles)
+		{
+			if (scripts.getScriptByTag(scriptName) == null)
+				scripts.addScript(scriptName).executeString(hxData);
+			else
+			{
+				scripts.getScriptByTag(scriptName).error("Duplacite Script Error!", '$scriptName: Duplicate Script');
+			}
+		}
+	}
+
+	function initEventScript(name:String) {}
+
+	function initCharScript(char:Character)
+	{
+		if (char == null || scripts == null)
+			return;
+
+		var name:String = char.curCharacter;
+		var hx:Null<String> = null;
+
+		for (extn in ScriptUtil.extns)
+		{
+			var path = Paths.getPreloadPath('characters/' + name + '.$extn');
+
+			if (FileSystem.exists(path))
+			{
+				hx = File.getContent(path);
+				break;
+			}
+		}
+
+		if (hx != null)
+		{
+			if (scripts.getScriptByTag(name) == null)
+				scripts.addScript(name).executeString(hx);
+			else
+			{
+				scripts.getScriptByTag(name).error("Duplacite Script Error!", '$name: Duplicate Script');
+			}
+		}
+	}
+
+	function onAddScript(script:Script)
+	{
+		script.set("PlayState", PlayState);
+		script.set("game", PlayState.instance);
+
+		// FUNCTIONS
+
+		//  CREATION FUNCTIONS
+		script.set("create", function() {});
+		script.set("createStage", function(?stage:String) {}); // ! HAS PAUSE
+		script.set("createPost", function() {});
+
+		//  COUNTDOWN
+		script.set("countdown", function() {});
+		script.set("countTick", function(?tick:Int) {});
+
+		//  SONG FUNCTIONS
+		script.set("startSong", function() {}); // ! HAS PAUSE
+		script.set("endSong", function() {}); // ! HAS PAUSE
+		script.set("beatHit", function(?beat:Int) {});
+		script.set("stepHit", function(?step:Int) {});
+
+		//  NOTE FUNCTIONS
+		script.set("spawnNote", function(?note:Note) {}); // ! HAS PAUSE
+		script.set("hitNote", function(?note:Note) {});
+		script.set("oppHitNote", function(?note:Note) {});
+		script.set("missNote", function(?note:Note) {});
+
+		script.set("notesUpdate", function() {}); // ! HAS PAUSE
+
+		script.set("ghostTap", function(?direction:Int) {});
+
+		//  EVENT FUNCTIONS
+		script.set("event", function(?event:String, ?val1:Dynamic, ?val2:Dynamic) {}); // ! HAS PAUSE
+		script.set("earlyEvent", function(event:String) {});
+
+		//  PAUSING / RESUMING
+		script.set("pause", function() {}); // ! HAS PAUSE
+		script.set("resume", function() {}); // ! HAS PAUSE
+
+		//  GAMEOVER
+		script.set("gameOver", function() {}); // ! HAS PAUSE
+
+		//  MISC
+		script.set("updatePost", function(?elapsed:Float) {});
+		script.set("recalcRating", function(?badHit:Bool = false) {}); // ! HAS PAUSE
+		script.set("updateScore", function(?miss:Bool = false) {}); // ! HAS PAUSE
+
+		// VARIABLES
+
+		script.set("curStep", 0);
+		script.set("curBeat", 0);
+		script.set("bpm", 0);
+
+		// OBJECTS
+		script.set("camGame", camGame);
+		script.set("camHUD", camHUD);
+		script.set("camOther", camOther);
+
+		script.set("camFollow", camFollow);
+		script.set("camFollowPos", camFollowPos);
+
+		// CHARACTERS
+		script.set("boyfriend", boyfriend);
+		script.set("dad", dad);
+		script.set("gf", gf);
+
+		script.set("boyfriendGroup", boyfriendGroup);
+		script.set("dadGroup", dadGroup);
+		script.set("gfGroup", gfGroup);
+
+		// NOTES
+		script.set("notes", notes);
+		script.set("strumLineNotes", strumLineNotes);
+		script.set("playerStrums", playerStrums);
+		script.set("opponentStrums", opponentStrums);
+
+		script.set("unspawnNotes", unspawnNotes);
+
+		// MISC
+		script.set("add", function(obj:FlxBasic, ?front:Bool = false)
+		{
+			if (front)
+			{
+				getInstance().add(obj);
+			}
+			else
+			{
+				if (PlayState.instance.isDead)
+				{
+					GameOverSubstate.instance.insert(GameOverSubstate.instance.members.indexOf(GameOverSubstate.instance.boyfriend), obj);
+				}
+				else
+				{
+					var position:Int = PlayState.instance.members.indexOf(PlayState.instance.gfGroup);
+					if (PlayState.instance.members.indexOf(PlayState.instance.boyfriendGroup) < position)
+					{
+						position = PlayState.instance.members.indexOf(PlayState.instance.boyfriendGroup);
+					}
+					else if (PlayState.instance.members.indexOf(PlayState.instance.dadGroup) < position)
+					{
+						position = PlayState.instance.members.indexOf(PlayState.instance.dadGroup);
+					}
+					PlayState.instance.insert(position, obj);
+				}
+			}
+		});
+	}
+
+	public static inline function getInstance()
+	{
+		return PlayState.instance.isDead ? GameOverSubstate.instance : PlayState.instance;
+	}
 }
