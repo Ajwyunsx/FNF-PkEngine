@@ -5495,7 +5495,7 @@ class PlayState extends MusicBeatState
 	var curLightEvent:Int = -1;
 }
 
-override function initScripts()
+ function initScripts()
 	{
 		if (scripts == null)
 			return;
@@ -5622,9 +5622,9 @@ override function initScripts()
 		}
 	}
 
-	override function initEventScript(name:String) {}
+function initEventScript(name:String) {}
 
-	override function initCharScript(char:Character)
+function initCharScript(char:Character)
 	{
 		if (char == null || scripts == null)
 			return;
@@ -5654,7 +5654,7 @@ override function initScripts()
 		}
 	}
 
-	override function onAddScript(script:Script)
+	function onAddScript(script:Script)
 	{
 		script.set("PlayState", PlayState);
 		script.set("game", PlayState.instance);
