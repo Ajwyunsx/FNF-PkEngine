@@ -5774,5 +5774,4 @@ function initCharScript(char:Character)
 function getInstance()
 	{
 		return PlayState.instance.isDead ? GameOverSubstate.instance : PlayState.instance;
-	}
 }
