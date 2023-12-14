@@ -29,10 +29,10 @@ import openfl.Lib;
 import openfl.filters.ShaderFilter;
 import openfl.system.Capabilities;
 import script.Script.ScriptReturn;
-import FlxRunTimeShader;
-import song.Conductor;
-import song.Section;
-import song.Song;
+import flixel.addons.display.FlxRuntimeShader;
+import Conductor;
+import Section;
+import Song;
 import PlayState;
 import CoolUtil;
 #if sys
