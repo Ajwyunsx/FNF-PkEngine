@@ -34,7 +34,7 @@ class DynamicShaderHandler
 
 	public function new(fileName:String, optimize:Bool = false)
 	{
-		var path = Paths.ShaderFragment(fileName);
+		var path = Paths.modsShaderFragment(fileName);
 		trace(path);
 		if (!FileSystem.exists(path)) path = Paths.shaderFragment(fileName);
 		
@@ -47,7 +47,7 @@ class DynamicShaderHandler
 		}
 
 		
-		var path2 = Paths.ShaderVertex(fileName);
+		var path2 = Paths.modsShaderVertex(fileName);
 		trace(path2);
 		if (!FileSystem.exists(path2)) path2 = Paths.shaderVertex(fileName);
 		
