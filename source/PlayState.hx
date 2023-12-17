@@ -342,8 +342,7 @@ class PlayState extends MusicBeatState
 	// stores the last combo score objects in an array
 	public static var lastScore:Array<FlxSprite> = [];
 	
-	public var scripts:ScriptGroup;
-
+	
 	override public function create()
 	{
 		//trace('Playback Rate: ' + playbackRate);
