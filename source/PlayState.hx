@@ -66,7 +66,7 @@ import flixel.system.FlxAssets.FlxShader;
 import flixel.addons.display.FlxRuntimeShader;
 import openfl.filters.ShaderFilter;
 #end
-import openfl.filters.ShaderFilter;
+//import openfl.filters.ShaderFilter;
 import Shaders;
 import DynamicShaderHandler;
 import openfl.display.GraphicsShader;
@@ -4303,7 +4303,14 @@ class PlayState extends MusicBeatState
 		}
 
 		rating.loadGraphic(Paths.image(pixelShitPart1 + daRating.image + pixelShitPart2));
+		if(!ClientPrefs.comboHud)
+		{
 		rating.cameras = [camHUD];
+		}
+		if(ClientPrefs.comboHud)
+		{
+		rating.cameras = [camGame];
+		}
 		rating.screenCenter();
 		rating.x = coolText.x - 40;
 		rating.y -= 60;
@@ -4315,7 +4322,14 @@ class PlayState extends MusicBeatState
 		rating.y -= ClientPrefs.comboOffset[1];
 
 		var comboSpr:FlxSprite = new FlxSprite().loadGraphic(Paths.image(pixelShitPart1 + 'combo' + pixelShitPart2));
+		if(!ClientPrefs.comboHud)
+		{
 		comboSpr.cameras = [camHUD];
+		}
+		if(ClientPrefs.comboHud)
+		{
+		comboSpr.cameras = [camGame];
+		}
 		comboSpr.screenCenter();
 		comboSpr.x = coolText.x;
 		comboSpr.acceleration.y = FlxG.random.int(200, 300) * playbackRate * playbackRate;
@@ -4381,6 +4395,14 @@ class PlayState extends MusicBeatState
 		for (i in seperatedScore)
 		{
 			var numScore:FlxSprite = new FlxSprite().loadGraphic(Paths.image(pixelShitPart1 + 'num' + Std.int(i) + pixelShitPart2));
+			if(!ClientPrefs.comboHud)
+		{
+		numScore.cameras = [camHUD];
+		}
+		    if(ClientPrefs.comboHud)
+		{
+		numScore.cameras = [camGame];
+		}
 			numScore.cameras = [camHUD];
 			numScore.screenCenter();
 			numScore.x = coolText.x + (43 * daLoop) - 90;
