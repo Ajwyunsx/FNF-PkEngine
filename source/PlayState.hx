@@ -60,7 +60,6 @@ import StageData;
 import FunkinLua;
 import DialogueBoxPsych;
 import Conductor.Rating;
-import flixel.system.FlxAssets.FlxShader;
 
 #if !flash 
 import flixel.addons.display.FlxRuntimeShader;
@@ -68,7 +67,7 @@ import openfl.filters.ShaderFilter;
 #end
 //import openfl.filters.ShaderFilter;
 import Shaders;
-import DynamicShaderHandler;
+//import DynamicShaderHandler;
 import openfl.display.GraphicsShader;
 import flixel.graphics.tile.FlxGraphicsShader;
 import openfl.display.Shader;
