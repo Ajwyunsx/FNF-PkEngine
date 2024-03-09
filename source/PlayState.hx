@@ -68,8 +68,8 @@ import openfl.filters.ShaderFilter;
 //import openfl.filters.ShaderFilter;
 import Shaders;
 //import DynamicShaderHandler;
-import openfl.display.GraphicsShader;
-import flixel.graphics.tile.FlxGraphicsShader;
+//import openfl.display.GraphicsShader;
+//import flixel.graphics.tile.FlxGraphicsShader;
 //import openfl.display.Shader;
 #if sys
 import sys.FileSystem;
@@ -166,13 +166,13 @@ class PlayState extends MusicBeatState
 	public var unspawnNotes:Array<Note> = [];
 	public var eventNotes:Array<EventNote> = [];
 	
-	public var shaderUpdates:Array<Float->Void> = [];
-	public var camGameShaders:Array<ShaderEffect> = [];
-    public var camHUDShaders:Array<ShaderEffect> = [];
-    public var camOtherShaders:Array<ShaderEffect> = [];
-    public var shader:FlxGraphicsShader;
-    public var luaShaders:Map<String, DynamicShaderHandler> = new Map<String, DynamicShaderHandler>();
-    public static var animatedShaders:Map<String, DynamicShaderHandler> = new Map<String, DynamicShaderHandler>();
+	//public var shaderUpdates:Array<Float->Void> = [];
+	//public var camGameShaders:Array<ShaderEffect> = [];
+    //public var camHUDShaders:Array<ShaderEffect> = [];
+    //public var camOtherShaders:Array<ShaderEffect> = [];
+    //public var shader:FlxGraphicsShader;
+    //public var luaShaders:Map<String, DynamicShaderHandler> = new Map<String, DynamicShaderHandler>();
+    //public static var animatedShaders:Map<String, DynamicShaderHandler> = new Map<String, DynamicShaderHandler>();
 
 	private var strumLine:FlxSprite;
 
