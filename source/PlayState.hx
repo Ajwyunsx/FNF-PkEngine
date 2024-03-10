@@ -166,7 +166,7 @@ class PlayState extends MusicBeatState
 	public var unspawnNotes:Array<Note> = [];
 	public var eventNotes:Array<EventNote> = [];
 	
-	//public var shaderUpdates:Array<Float->Void> = [];
+	public var shaderUpdates:Array<Float->Void> = [];
 	//public var camGameShaders:Array<ShaderEffect> = [];
     //public var camHUDShaders:Array<ShaderEffect> = [];
     //public var camOtherShaders:Array<ShaderEffect> = [];
