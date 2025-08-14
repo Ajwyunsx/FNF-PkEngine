@@ -58,7 +58,7 @@ jobs:
           haxelib install hscript
           haxelib git modchart https://github.com/Ajwyunsx/FunkinModchart
           haxelib git hxCodec https://github.com/SPLCoding/hxCodec-but-it-works-xd.git
-          haxelib git linc_luajit https://github.com/Sirox228/linc_luajit
+          haxelib git linc_luajit https://github.com/AnDevGo/linc_luajit-S
           haxelib git extension-androidtools https://github.com/MaysLastPlay77/extension-androidtools
           haxelib git hscript-ex https://github.com/ianharrigan/hscript-ex
           haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc
