@@ -137,6 +137,14 @@
 	<haxelib name="hxCodec" if="VIDEOS_ALLOWED"/> 
         <haxelib name="extension-androidtools" if="android"/>
 	<haxelib name="faxe" if='switch'/>
+		
+    <haxedef name="FM_ENGINE" value="PSYCH"/>
+	<haxedef name="FM_ENGINE_VERSION" value="0.6"/>
+
+	<haxelib name="modchart" />
+	<haxeflag name="--macro" value="modchart.backend.macros.Macro.includeFiles()"/>
+		
+	
 	<!--<haxelib name="polymod"/> -->
 	<haxelib name="discord_rpc" if="desktop"/>
 
